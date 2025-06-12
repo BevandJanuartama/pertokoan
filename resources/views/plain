@@ -1,0 +1,45 @@
+List Command Laravel dan Keterangan
+composer create-project laravel/laravel nama_project
+Membuat project Laravel baru.
+
+php artisan make:model NamaModel
+Membuat model baru.
+
+php artisan make:model NamaModel -m
+Membuat model sekaligus migration (file struktur tabel database).
+
+php artisan make:model NamaModel -c
+Membuat model sekaligus controller.
+
+php artisan make:model NamaModel -r
+Membuat model dan controller resource (CRUD otomatis di controller).
+
+php artisan make:model NamaModel -f
+Membuat model sekaligus factory (untuk generate data dummy).
+
+php artisan make:model NamaModel -mcr
+Membuat model, migration, controller resource sekaligus.
+
+php artisan make:model NamaModel -mcrf
+Membuat model, migration, controller resource, dan factory sekaligus.
+
+php artisan migrate
+Menjalankan migration untuk membuat tabel di database.
+
+php artisan migrate:rollback
+Membatalkan migration terakhir (menghapus tabel).
+
+php artisan db:seed
+Menjalankan seeder untuk memasukkan data dummy ke database.
+
+php artisan make:controller NamaController
+Membuat controller baru.
+
+php artisan make:controller NamaController --resource
+Membuat controller dengan method CRUD (resource controller).
+
+php artisan route:list
+Menampilkan daftar semua route yang terdaftar di aplikasi.
+
+php artisan serve
+Menjalankan server development lokal.

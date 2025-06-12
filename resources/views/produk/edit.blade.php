@@ -1,0 +1,89 @@
+@extends('layouts.app')
+
+@section('content')
+<h1 class="text-2xl font-bold mb-6 text-green-900">Edit Produk</h1>
+
+{{-- Form edit antri --}}
+<form action="{{ route('produk.update', $produk->id) }}" method="POST" class="bg-green-50 p-6 rounded border-2 border-green-500 max-w-lg">
+    @csrf
+    @method('PUT')
+
+    {{-- Input keterangan --}}
+    <div class="mb-6">
+        <label for="nama_produk" class="block text-green-900 font-semibold mb-1">Nama Produk:</label>
+        <input type="text" name="nama_produk" id="nama_produk"
+               value="{{ old('nama_produk', $produk->nama_produk) }}"
+               required class="w-full p-2 border border-green-500 rounded" />
+        @error('nama_produk')
+            <div class="text-red-600 mt-1 text-sm">{{ $message }}</div>
+        @enderror
+    </div>
+
+    {{-- Dropdown pilih pasien --}}
+    <div class="mb-6">
+        <label for="id_toko" class="block text-green-900 font-semibold mb-1">Toko</label>
+        <div class="relative">
+            <select name="id_toko" id="id_toko" required
+                    class="w-full p-2 pr-10 border border-green-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-green-500">
+                <option value="" disabled {{ old('id_toko') ? '' : 'selected' }}>-- Pilih Toko --</option>
+                @foreach ($tokos as $toko)
+                <option value="{{ $toko->id }}" {{ old('id_toko', $produk->id_toko) == $toko->id ? 'selected' : '' }}>
+                        {{ $toko->nama_toko }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg class="w-4 h-4 text-green-700" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    {{-- Input keterangan --}}
+    <div class="mb-6">
+        <label for="harga" class="block text-green-900 font-semibold mb-1">Harga:</label>
+        <input type="text" name="harga" id="harga"
+               value="{{ old('harga', $produk->harga) }}"
+               required class="w-full p-2 border border-green-500 rounded" />
+        @error('harga')
+            <div class="text-red-600 mt-1 text-sm">{{ $message }}</div>
+        @enderror
+    </div>
+
+    {{-- Input keterangan --}}
+    <div class="mb-6">
+        <label for="stok" class="block text-green-900 font-semibold mb-1">Stok:</label>
+        <input type="text" name="stok" id="stok"
+               value="{{ old('stok', $produk->stok) }}"
+               required class="w-full p-2 border border-green-500 rounded" />
+        @error('stok')
+            <div class="text-red-600 mt-1 text-sm">{{ $message }}</div>
+        @enderror
+    </div>
+
+    {{-- Tombol simpan --}}
+    <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded transition">
+        Update
+    </button>
+</form>
+
+{{-- Tombol navigasi kembali --}}
+<div class="mt-6 flex flex-col gap-2">
+    <a href="{{ route('produk.index') }}"
+       class="w-60 px-4 py-2 bg-gray-300 text-green-900 rounded hover:bg-gray-400 transition text-center">
+        ← Kembali ke Daftar Produk
+    </a>
+    <a href="{{ route('toko.index') }}"
+       class="w-60 px-4 py-2 bg-gray-300 text-green-900 rounded hover:bg-gray-400 transition text-center">
+        ← Kembali ke Daftar Toko
+    </a>
+    <a href="{{ route('toko.show', $produk->id) }}"
+       class="w-60 px-4 py-2 bg-gray-300 text-green-900 rounded hover:bg-gray-400 transition text-center">
+        ← Kembali ke Detail Toko
+    </a>
+</div>
+@endsection

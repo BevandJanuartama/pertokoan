@@ -23,10 +23,11 @@
         <table class="w-full border-collapse">
             <thead class="bg-green-900 text-white text-[20px]">
                 <tr>
-                    <th class="w-[5%] px-4 py-3 text-center font-bold border border-green-500">No</th>
-                    <th class="w-[45%] px-4 py-3 font-bold border border-green-500">Nama Produk</th>
-                    <th class="w-[30%] px-4 py-3 font-bold border border-green-500">Harga</th>
-                    <th class="w-[20%] px-4 py-3 text-center font-bold border border-green-500">Aksi</th>
+                    <th class="w-[10%] px-4 py-3 text-center font-bold border border-green-500">No Produk</th>
+                    <th class="w-[25%] px-4 py-3 text-center font-bold border border-green-500">Nama Produk</th>
+                    <th class="w-[25%] px-4 py-3 text-center font-bold border border-green-500">harga</th>
+                    <th class="w-[15%] px-4 py-3 text-center font-bold border border-green-500">Stok</th>
+                    <th class="w-[25%] px-4 py-3 text-center font-bold border border-green-500">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,6 +37,10 @@
                     <td class="px-4 py-3 border border-green-500">{{ $produk->nama_produk }}</td>
 
                     <td class="px-4 py-3 border border-green-500">Rp{{ number_format($produk->harga, 0, ',', '.') }}</td>
+
+                    <td class="px-4 py-3 text-center border border-green-500">
+                        {{ $produk->stok }}
+                    </td>
                     
                     <td class="px-4 py-3 text-center border border-green-500">
                         <a href="{{ route('produk.edit', $produk) }}"
@@ -55,7 +60,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center px-4 py-4 border border-green-500 text-gray-600">
+                    <td colspan="5" class="text-center px-4 py-4 border border-green-500 text-gray-600">
                         Belum ada produk di toko ini.
                     </td>
                 </tr>

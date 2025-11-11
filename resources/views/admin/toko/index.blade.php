@@ -2,11 +2,11 @@
 
 @section('content') {{-- Awal dari bagian konten --}}
 
-<h1 class="text-2xl font-bold mb-4 text-green-900">Daftar Toko</h1>
+<h1 class="text-3xl font-bold mb-4 text-green-900">Daftar Toko</h1>
 
 {{-- Tombol untuk menambahkan toko baru --}}
 <a href="{{ route('toko.create') }}"
-   class="inline-block mb-4 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">
+   class="text-xl inline-block mb-4 px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800 transition">
     Tambah Toko
 </a>
 
@@ -21,7 +21,7 @@
 <div class="overflow-x-auto">
     <div class="border-2 border-green-500 rounded-lg overflow-hidden">
         <table class="w-full border-collapse">
-            <thead class="bg-green-900 text-white text-[18px]">
+            <thead class="bg-green-900 text-white text-[20px]">
                 <tr>
                     <th class="px-4 py-3 text-center border border-green-500">No</th>
                     <th class="px-4 py-3 text-center border border-green-500">Nama Toko</th>

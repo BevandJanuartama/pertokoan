@@ -12,15 +12,15 @@ class ProdukController extends Controller
     // Menampilkan seluruh produk beserta relasi toko
     public function index()
     {
-        $produks = Produk::with('toko')->orderBy('nama_produk', 'asc')->get();
-        return view('produk.index', compact('produks'));
+        $produks = Produk::with('toko')->orderBy('created_at', 'asc')->get();
+        return view('admin.produk.index', compact('produks'));
     }
 
     // Menampilkan form tambah produk
     public function create()
     {
         $tokos = Toko::all(); // untuk dropdown pilih toko
-        return view('produk.create', compact('tokos'));
+        return view('admin.produk.create', compact('tokos'));
     }
 
     // Menyimpan produk baru
@@ -39,17 +39,11 @@ class ProdukController extends Controller
         return redirect()->route('produk.index');
     }
 
-    // Menampilkan detail produk (opsional)
-    public function show(Produk $produk)
-    {
-        return view('produk.show', compact('produk'));
-    }
-
     // Menampilkan form edit produk
     public function edit(Produk $produk)
     {
         $tokos = Toko::all();
-        return view('produk.edit', compact('produk', 'tokos'));
+        return view('admin.produk.edit', compact('produk', 'tokos'));
     }
 
     // Menyimpan perubahan data produk
@@ -74,6 +68,6 @@ class ProdukController extends Controller
         $produk->delete();
 
         Alert::success('Dihapus', 'Produk berhasil dihapus');
-        return redirect()->route('produk.index');
+        return redirect()->route('admin.produk.index');
     }
 }

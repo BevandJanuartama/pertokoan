@@ -12,13 +12,13 @@ class TokoController extends Controller
     public function index()
     {
         $tokos = Toko::all();
-        return view('toko.index', compact('tokos'));
+        return view('admin.toko.index', compact('tokos'));
     }
 
     // Menampilkan form tambah toko
     public function create()
     {
-        return view('toko.create');
+        return view('admin.toko.create');
     }
 
     // Menyimpan data toko baru
@@ -39,13 +39,13 @@ class TokoController extends Controller
     public function show(Toko $toko)
     {
         $produks = $toko->produks;
-        return view('toko.show', compact('toko', 'produks'));
+        return view('admin.toko.show', compact('toko', 'produks'));
     }
 
     // Menampilkan form edit toko
     public function edit(Toko $toko)
     {
-        return view('toko.edit', compact('toko'));
+        return view('admin.toko.edit', compact('toko'));
     }
 
     // Menyimpan perubahan data toko
@@ -67,6 +67,6 @@ class TokoController extends Controller
     {
         $toko->delete();
         Alert::success('Dihapus', 'Data toko berhasil dihapus');
-        return redirect()->route('toko.index');
+        return redirect()->route('admin.toko.index');
     }
 }

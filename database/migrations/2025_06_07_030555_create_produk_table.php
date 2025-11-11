@@ -16,7 +16,7 @@ class CreateProdukTable extends Migration
             $table->foreignId('id_toko')->constrained('toko')->onDelete('cascade');
 
             $table->string('nama_produk');     // Nama produk
-            $table->decimal('harga', 10, 2);   // Harga produk
+            $table->decimal('harga', 10,);   // Harga produk
             $table->integer('stok');           // Jumlah stok produk
             
             $table->timestamps();              // Kolom created_at dan updated_at

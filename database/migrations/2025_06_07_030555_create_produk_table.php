@@ -4,26 +4,49 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * Migration ini digunakan untuk membuat tabel 'produk'
+ * yang menyimpan data produk milik toko tertentu.
+ *
+ * Kolom yang disediakan:
+ * - id: primary key
+ * - id_toko: foreign key ke tabel 'toko'
+ * - nama_produk: nama produk
+ * - harga: harga produk (decimal)
+ * - stok: jumlah stok tersedia
+ * - timestamps: created_at & updated_at
+ */
 class CreateProdukTable extends Migration
 {
-    // Membuat tabel 'produk' di database
+    /**
+     * Jalankan migration (membuat tabel 'produk')
+     */
     public function up()
     {
         Schema::create('produk', function (Blueprint $table) {
-            $table->id();  // ID produk sebagai primary key
-            
-            // Foreign key ke tabel 'toko'
+            // Kolom ID utama (auto increment)
+            $table->id();
+
+            // Foreign key ke tabel 'toko', hapus produk jika toko dihapus
             $table->foreignId('id_toko')->constrained('toko')->onDelete('cascade');
 
-            $table->string('nama_produk');     // Nama produk
-            $table->decimal('harga', 10,);   // Harga produk
-            $table->integer('stok');           // Jumlah stok produk
-            
-            $table->timestamps();              // Kolom created_at dan updated_at
+            // Nama produk
+            $table->string('nama_produk');
+
+            // Harga produk dengan presisi 10 digit dan 2 angka desimal
+            $table->decimal('harga', 10, 2);
+
+            // Stok produk
+            $table->integer('stok');
+
+            // Kolom timestamps otomatis (created_at & updated_at)
+            $table->timestamps();
         });
     }
 
-    // Hapus tabel 'produk' saat rollback
+    /**
+     * Rollback migration (menghapus tabel 'produk')
+     */
     public function down()
     {
         Schema::dropIfExists('produk');

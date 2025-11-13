@@ -7,28 +7,46 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use Inertia\Inertia;
 
-// Halaman utama (Inertia)
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+| Semua route web utama aplikasi
+| Middleware dipakai untuk membatasi akses sesuai kebutuhan
+*/
+
+// ===================== HALAMAN UTAMA ===================== //
+// Route publik homepage menggunakan Inertia
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    return Inertia::render('welcome'); // Halaman frontend Inertia 'welcome'
 });
 
-// Dashboard hanya bisa diakses jika login & sudah verifikasi
+// ===================== DASHBOARD ===================== //
+// Hanya user login dan sudah verifikasi email
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('dashboard'); // View Blade dashboard
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Grup route yang butuh autentikasi
+// ===================== GRUP ROUTE LOGIN ===================== //
+// Semua route di dalam ini hanya bisa diakses user yang login
 Route::middleware('auth')->group(function () {
-    // Profil
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // CRUD Toko, Produk, User
+    // ===================== PROFIL ===================== //
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');    // Form edit profil
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // Simpan perubahan
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // Hapus akun
+
+    // ===================== CRUD TOKO ===================== //
+    // Membuat semua route CRUD otomatis: index, create, store, show, edit, update, destroy
     Route::resource('toko', TokoController::class);
+
+    // ===================== CRUD PRODUK ===================== //
     Route::resource('produk', ProdukController::class);
+
+    // ===================== CRUD USER ===================== //
     Route::resource('user', UserController::class);
 });
 
-// Route auth bawaan Breeze
+// ===================== ROUTE AUTH BAWAAN BREEZE ===================== //
+// Login, register, logout, forgot password, email verification
 require __DIR__ . '/auth.php';

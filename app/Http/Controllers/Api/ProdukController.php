@@ -7,9 +7,19 @@ use App\Models\Produk;
 use App\Models\Toko;
 use Illuminate\Http\Request;
 
+/**
+ * Controller Produk untuk API
+ *
+ * Mengelola CRUD produk dan mengembalikan data dalam format JSON.
+ * Produk berelasi dengan Toko (Many-to-One).
+ */
 class ProdukController extends Controller
 {
-    // Menampilkan seluruh produk beserta relasi toko
+    /**
+     * Menampilkan semua produk beserta data toko terkait
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $produks = Produk::with('toko')->orderBy('created_at', 'asc')->get();
@@ -20,7 +30,11 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Menampilkan daftar toko untuk form tambah produk (opsional)
+    /**
+     * Menampilkan daftar toko untuk form tambah produk (opsional)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create()
     {
         $tokos = Toko::all();
@@ -31,9 +45,15 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Menyimpan produk baru
+    /**
+     * Menyimpan produk baru
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
@@ -41,6 +61,7 @@ class ProdukController extends Controller
             'id_toko' => 'required|exists:toko,id',
         ]);
 
+        // Simpan produk
         $produk = Produk::create($request->all());
 
         return response()->json([
@@ -50,7 +71,12 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Menampilkan detail produk
+    /**
+     * Menampilkan detail produk beserta data toko
+     *
+     * @param  \App\Models\Produk  $produk
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show(Produk $produk)
     {
         $produk->load('toko');
@@ -61,7 +87,12 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Menampilkan data produk yang akan diedit
+    /**
+     * Menampilkan data produk yang akan diedit
+     *
+     * @param  \App\Models\Produk  $produk
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function edit(Produk $produk)
     {
         $tokos = Toko::all();
@@ -75,9 +106,16 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Memperbarui data produk
+    /**
+     * Memperbarui data produk
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Produk  $produk
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, Produk $produk)
     {
+        // Validasi input
         $request->validate([
             'nama_produk' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
@@ -85,6 +123,7 @@ class ProdukController extends Controller
             'id_toko' => 'required|exists:toko,id',
         ]);
 
+        // Update produk
         $produk->update($request->all());
 
         return response()->json([
@@ -94,7 +133,12 @@ class ProdukController extends Controller
         ]);
     }
 
-    // Menghapus produk
+    /**
+     * Menghapus produk
+     *
+     * @param  \App\Models\Produk  $produk
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy(Produk $produk)
     {
         try {

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             [
                 'id' => 1,
                 'username' => 'user',
-                'password' => Hash::make('uer'), 
+                'password' => Hash::make('user'), 
                 'level' => 'user',
                 'nama_lengkap' => 'user user',
                 'telepon' => null,

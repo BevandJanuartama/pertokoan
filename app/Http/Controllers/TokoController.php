@@ -43,7 +43,9 @@ class TokoController extends Controller
         ]);
 
         Toko::create($request->all()); // Simpan data ke tabel toko
+
         Alert::success('Berhasil', 'Toko berhasil ditambahkan'); // Popup notifikasi
+        
         return redirect()->route('toko.index'); // Kembali ke daftar toko
     }
 

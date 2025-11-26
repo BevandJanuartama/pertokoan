@@ -5,48 +5,70 @@ use App\Http\Controllers\TokoController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CheckLevel;
 use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-| Semua route web utama aplikasi
-| Middleware dipakai untuk membatasi akses sesuai kebutuhan
+| Berisi semua route HTTP untuk aplikasi berbasis web.
+| Route dapat diberi middleware untuk membatasi akses (contoh: admin/user).
 */
 
-// ===================== HALAMAN UTAMA ===================== //
-// Route publik homepage menggunakan Inertia
+// ========================= HALAMAN UTAMA ========================= //
+// Route publik, tidak butuh login
 Route::get('/', function () {
-    return Inertia::render('welcome'); // Halaman frontend Inertia 'welcome'
+    // Menampilkan file resources/views/welcome.blade.php
+    return view('welcome');
 });
 
-// ===================== DASHBOARD ===================== //
-// Hanya user login dan sudah verifikasi email
-Route::get('/dashboard', function () {
-    return view('dashboard'); // View Blade dashboard
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-// ===================== GRUP ROUTE LOGIN ===================== //
-// Semua route di dalam ini hanya bisa diakses user yang login
-Route::middleware('auth')->group(function () {
+// ================================================================= //
+//            ROUTE UNTUK ADMIN (wajib login + level admin)          //
+// ================================================================= //
+Route::middleware(['auth', CheckLevel::class . ':admin'])->group(function () {
 
-    // ===================== PROFIL ===================== //
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');    // Form edit profil
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update'); // Simpan perubahan
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); // Hapus akun
-
-    // ===================== CRUD TOKO ===================== //
-    // Membuat semua route CRUD otomatis: index, create, store, show, edit, update, destroy
+    /**
+     * CRUD Toko
+     *
+     * Route::resource() otomatis membuat:
+     * - GET    /toko          -> index
+     * - GET    /toko/create   -> create
+     * - POST   /toko          -> store
+     * - GET    /toko/{id}     -> show
+     * - GET    /toko/{id}/edit-> edit
+     * - PUT    /toko/{id}     -> update
+     * - DELETE /toko/{id}     -> destroy
+     */
     Route::resource('toko', TokoController::class);
 
-    // ===================== CRUD PRODUK ===================== //
+    /**
+     * CRUD Produk
+     *
+     * Sama seperti di atas, namun untuk entitas produk.
+     * Produk juga memiliki foreign key id_toko.
+     */
     Route::resource('produk', ProdukController::class);
+});
 
-    // ===================== CRUD USER ===================== //
+
+// ================================================================= //
+//              ROUTE UNTUK USER (wajib login + level user)          //
+// ================================================================= //
+Route::middleware(['auth', CheckLevel::class . ':user'])->group(function () {
+
+    /**
+     * CRUD User
+     *
+     * Menampilkan data di dashboard user
+     */
     Route::resource('user', UserController::class);
 });
 
-// ===================== ROUTE AUTH BAWAAN BREEZE ===================== //
-// Login, register, logout, forgot password, email verification
+
+// ================================================================= //
+//               ROUTE AUTH BAWAAN BREEZE (Login, Register)          //
+// ================================================================= //
+// Termasuk login, register, forgot password, email verification dll.
 require __DIR__ . '/auth.php';

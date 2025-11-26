@@ -2,7 +2,7 @@
 
 <div align="center">
 
-**Base CRUD Laravel Built on Laravel 12**
+**Base CRUD Laravel for 2025 Internship Assesment Built on Laravel 12**
 
 [![Laravel](https://img.shields.io/badge/Laravel-12.21.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
